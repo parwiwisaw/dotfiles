@@ -48,4 +48,25 @@ if [ ! -e "$HOME/.gitconfig.local" ]; then
     echo "  seed    .gitconfig.local (set your git identity)"
 fi
 
+# --- Packages ---------------------------------------------------------------
+# Make `git pull && ./install.sh` a complete upsert: links AND packages.
+# brew bundle / apt are idempotent — already-installed packages are skipped.
+# Skip with: SKIP_PACKAGES=1 ./install.sh
+if [ -z "${SKIP_PACKAGES:-}" ]; then
+    if command -v brew >/dev/null 2>&1 && [ -f "$DOTFILES/Brewfile" ]; then
+        echo "Packages (brew bundle):"
+        brew bundle --file "$DOTFILES/Brewfile" | sed 's/^/  /'
+    elif command -v apt-get >/dev/null 2>&1 && [ -f "$DOTFILES/packages.linux" ]; then
+        pkgs=$(grep -v '^#' "$DOTFILES/packages.linux" | xargs)
+        if sudo -n true 2>/dev/null; then
+            echo "Packages (apt):"
+            # shellcheck disable=SC2086
+            sudo apt-get install -y -qq $pkgs >/dev/null && echo "  installed: $pkgs"
+        else
+            echo "Packages: sudo needs a password — run yourself:"
+            echo "  sudo apt-get install -y $pkgs"
+        fi
+    fi
+fi
+
 echo "Done. Open a new shell."

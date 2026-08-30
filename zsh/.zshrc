@@ -150,6 +150,9 @@ if command -v fzf >/dev/null && fzf --zsh >/dev/null 2>&1; then
   source <(fzf --zsh)
 fi
 
+# zoxide — smarter cd (z <fragment>); silently absent if not installed
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+
 # Starship prompt
 command -v starship >/dev/null && eval "$(starship init zsh)"
 
