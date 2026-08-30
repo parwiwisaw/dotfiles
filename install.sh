@@ -53,9 +53,14 @@ fi
 # brew bundle / apt are idempotent — already-installed packages are skipped.
 # Skip with: SKIP_PACKAGES=1 ./install.sh
 if [ -z "${SKIP_PACKAGES:-}" ]; then
-    if command -v brew >/dev/null 2>&1 && [ -f "$DOTFILES/Brewfile" ]; then
+    # Find brew even under non-interactive ssh, where .zprofile hasn't run
+    BREW=""
+    for b in "$(command -v brew 2>/dev/null)" /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+        [ -n "$b" ] && [ -x "$b" ] && BREW="$b" && break
+    done
+    if [ -n "$BREW" ] && [ -f "$DOTFILES/Brewfile" ]; then
         echo "Packages (brew bundle):"
-        brew bundle --file "$DOTFILES/Brewfile" | sed 's/^/  /'
+        "$BREW" bundle --file "$DOTFILES/Brewfile" | sed 's/^/  /'
     elif command -v apt-get >/dev/null 2>&1 && [ -f "$DOTFILES/packages.linux" ]; then
         pkgs=$(grep -v '^#' "$DOTFILES/packages.linux" | xargs)
         if sudo -n true 2>/dev/null; then
