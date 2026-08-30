@@ -1,0 +1,17 @@
+# Machine-local layer — never tracked
+*.local
+*.local.*
+!*.local.example
+
+# Secrets — belt and braces
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+*_history
+.zsh_history
+
+# OS noise
+.DS_Store

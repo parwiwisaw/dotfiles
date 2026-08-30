@@ -1,0 +1,21 @@
+# Identity lives in ~/.gitconfig.local (untracked). A machine without that
+# file refuses to commit until an identity is set — deliberate.
+[include]
+	path = ~/.gitconfig.local
+[core]
+	excludesfile = ~/.gitignore_global
+[diff]
+	tool = bc
+[merge]
+	tool = bc
+[mergetool "bc"]
+	trustExitCode = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[difftool "bc"]
+	trustExitCode = true
+[init]
+	defaultBranch = main

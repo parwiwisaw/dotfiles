@@ -1,0 +1,6 @@
+# Machine-local zsh config — copy to ~/.zshrc.local. NOT tracked in git.
+# Put identity, host labels, and work-specific settings here (proxies,
+# internal registries, corporate CAs). Nothing in this file is ever pushed.
+
+# Short label shown in the prompt (falls back to hostname if unset)
+# export PROMPT_HOST=MYBOX

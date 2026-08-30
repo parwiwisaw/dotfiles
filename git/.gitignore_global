@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+.AppleDouble
+
+# Editors
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Env / secrets — belt and braces; never rely on this alone
+.env
+.env.*
+*.pem

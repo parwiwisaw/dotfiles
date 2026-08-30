@@ -1,0 +1,57 @@
+# Minimal starship config - only show what matters
+
+format = """${env_var.PROMPT_HOST}$directory$git_branch$git_status$character"""
+
+# Machine label. Set by ~/.zshrc, which falls back to the short hostname when
+# PROMPT_HOST isn't already exported. Renders nothing if the var is unset.
+[env_var.PROMPT_HOST]
+variable = "PROMPT_HOST"
+format = "[$env_value]($style) "
+style = "yellow bold"
+
+[directory]
+truncation_length = 2
+truncate_to_repo = true
+
+[git_branch]
+format = " [$branch]($style) "
+style = "purple"
+
+[git_status]
+format = '[$all_status$ahead_behind]($style) '
+style = "red"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+# Disable everything else
+[aws]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[python]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[kubernetes]
+disabled = true
